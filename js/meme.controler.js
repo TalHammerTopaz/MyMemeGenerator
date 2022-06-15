@@ -33,7 +33,7 @@ function renderMeme(){
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
   
     const meme = getMeme() 
-    var imgSrc = `../img/${meme.selectedImgId}.jpg`
+    var imgSrc = `img/${meme.selectedImgId}.jpg`
 
     var img = new Image()
     img.src= imgSrc
