@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" />
+    <title>MyMemeGenerator</title>
+</head>
+<body onload="init()">
+    <header class="flex space-between">
+        <h1>LOGO</h1>
+        <nav>
+            <a href="#">Gallery</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
+
+    <main class="flex center">
+
+        <div class="gallary">        
+            <div class="gallary-header flex center">
+                <input type="text" class= "search-input" 
+                    oninput="onSearch(this.value)"
+                    placeholder="Search..." />
+                <h2>some search words...</h2>
+            </div>
+            <button onclick="onGenerateRandomMeme()" >I'm flexibale</button> 
+            <div class="img-container"></div>
+        </div>
+        
+    <div hidden class="meme-contanier">
+
+            <div class="canvas-contanier">
+                <canvas id="my-canvas" 
+                height="450" 
+                width="450"         
+                >
+            </canvas>
+        </div>
+    
+    
+    <div class="control control-borad">
+        
+        <div class="control">
+            <input type="text" class= "text-input" 
+            oninput="setLineTxt(this.value)"
+            placeholder="Start typing..." />
+        </div>
+        
+        <div class="line-control">
+            <button  onclick = "onSwitchLine()">change</button>
+            <button onclick = "onAddLine()">Add</button>
+            <button>Delete</button>
+        </div>
+        
+        <div class="control text-control">
+                <button  onclick = "onChangeSize(1)">+size</button>
+                <button  onclick = "onChangeSize(-1)">-Size</button>
+                <button>AlignLeft</button>
+                <button>AlignCenter</button>
+                <button>AlignRight</button>
+            </div>
+            
+            <div class=" control advanced-control">    
+                <label for="font">Select font:</label>
+                <select name="font" id="font" onchange = "onSelectStyle({fontFamily: this.value})">
+                    <option value="Tahoma">Tahoma </option>
+                    <option value="fantasy">Fantazy</option>
+                    <option value="Ariel">Ariel</option>
+                </select>
+                
+                <label for="fillColor">Fill Color:</label>
+                <input type="color" id="fillColor" name="fillColor" value="#A3DBE6"
+                onchange = "onSelectStyle({fill: this.value})">
+                
+                <label for="strokeColor">Stroke Color:</label>
+                <input type="color" id="strokeColor" name="strokeColor" value="#2f4f4f"
+                onchange = "onSelectStyle({stroke: this.value})">
+            </div>
+            
+            <div class=" control sticker-control"> 😎 😎  😎  😎  </div>       
+            
+            <div class=" control output-control">
+                <a href="#" onclick="downloadCanvas(this)" download="">Download</a>
+                <button onclick="uploadImg()">Share On FaceBook</button>
+                <p class="user-msg"></p>
+                <div class="share-container"></div>
+            </div> 
+            
+            
+        </div>
+        
+    </div>
+        
+    </main>
+    
+    
+    
+
+    <script src="js/services/util.service.js"></script>
+    <!-- <script src="js/services/storage.service.js"></script>
+    <script src="js/services/meme.i18n.js"></script> -->
+    <script src="js/services/upload.service.js"></script>
+    <script src="js/services/meme.service.js"></script> 
+    <script src="js/gallery.controler.js"></script>
+    <script src="js/meme.controler.js"></script>
+</body>
+</html>
