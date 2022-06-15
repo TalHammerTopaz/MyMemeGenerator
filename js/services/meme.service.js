@@ -2,25 +2,6 @@
 
 /*GLOBAL VARS*/
 
-
-
-var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
-
-var gImgs = [{id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat']}]
-
-var gMeme = {
-    selectedImgId: 5,
-    selectedLineIdx: 0,
-    lines: [    {
-                txt: 'I sometimes eat Falafel',
-                size: 20,
-                align: 'left',
-                color: 'red'
-                }
-        ]
-}
-
-
 const memesSentences = [
     'I never eat falafel',
     'DOMS DOMS EVERYWHERE',
@@ -40,11 +21,53 @@ const memesSentences = [
   ]
 
 
+var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
+
+var gImgs = [{id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat']}]
+
+var gMeme = {
+    selectedImgId: 5,
+    selectedLineIdx: 0,
+    lines: [    {
+                txt: 'I sometimes eat Falafel',
+                align: 'left',
+                fill: "#A3DBE6",
+                stroke: "#2f4f4f",
+                fontFamily:'Arial',
+                fontSize: 40,
+                }
+        ]
+}
+
+
+// var gStyle = {
+//     fill: "#A3DBE6",
+//     stroke: "#2f4f4f",
+//     fontSize: 70,
+//     fontFamily: 'Arial',
+// }
+
+
 
 function getMeme(){
     return gMeme
 }
 
+// function getStyle(){
+//     return gStyle
+// }
+
+function setStyle(style){
+    console.log(style.fill)
+    if (style.fill !== undefined) gMeme.lines[gMeme.selectedLineIdx].fill = style.fill
+    if (style.stroke !== undefined) gMeme.lines[gMeme.selectedLineIdx].stroke = style.stroke
+    if (style.fontFamily !== undefined) gMeme.lines[gMeme.selectedLineIdx].fontFamily= style.fontFamily
+    console.log(gMeme)
+}
+
+function changeFontSize(d){
+    gMeme.lines[gMeme.selectedLineIdx].fontSize +=d*10
+}
 
 function addLine(){
     gMeme.lines.push(_createline())
@@ -73,17 +96,27 @@ function generateRandomMeme(){
 
 function _createline(){
     return {
-        txt: 'New Line',
-        size: 20,
+        txt: 'I sometimes eat Falafel',
         align: 'left',
-        color: 'red'
+        fill: "#A3DBE6",
+        stroke: "#2f4f4f",
+        fontFamily:'Arial',
+        fontSize: 40,
         }
 }
 
 function _createRandomLine(){
     return {
-        txt: memesSentences[getRandomInt(0, memesSentences.length-1)],
-        size: getRandomInt(10, 50),
-        color: getRandomColor(), 
+        txt: memesSentences[getRandomInt(0, memesSentences.length-1)],   
+        fill: getRandomColor(),
+        stroke: getRandomColor(),
+        fontFamily:'Arial',
+        fontSize: getRandomInt(20, 60),
     }
 } 
+
+function maxSize(txt){
+    const maxSize =  (gCanvas.width / txt.length)*2
+    console.log('maxSize:' , maxSize)
+    return maxSize
+}

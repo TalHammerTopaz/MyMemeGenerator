@@ -3,13 +3,6 @@
 var gCanvas
 var gCtx
 
-var gStyle = {
-    fill: "#A3DBE6",
-    stroke: "#2f4f4f",
-    fontSize: 70,
-    fontFamily: 'Arial',
-}
-
 
 
 function init() {
@@ -39,8 +32,10 @@ function renderMeme(){
     img.src= imgSrc
     img.onload = renderImg.bind(null, img)
 
-    gCtx.strokeStyle= gStyle.stroke
-    gCtx.fillStyle = gStyle.fill
+    // const style = getStyle()
+    
+    // gCtx.strokeStyle= style.stroke
+    // gCtx.fillStyle = style.fill
 
     setTimeout (renderTxt, 100, meme.lines)
 }
@@ -53,12 +48,20 @@ function renderImg(img) {
 
 function renderTxt(txtLines){
     console.log('rendering txt')
-    var font= gStyle.fontSize +'px '+ gStyle.fontFamily
-    gCtx.font = font
+    // const style = getStyle()
     var diff = gCanvas.height/ txtLines.length
     var i= 0
-    txtLines.forEach(line => {    
+    txtLines.forEach(line => { 
+        console.log('im the lin to render', line) 
+      
+        console.log('font size' , line.fontSize)        
+        var currFontSize = (line.fontSize<= maxSize(line.txt))? line.fontSize : maxSize(line.txt)
+        console.log('currSize', currFontSize)
+        var font= currFontSize +'px '+ line.fontFamily
+        gCtx.font = font
         console.log(i, diff)
+        gCtx.strokeStyle = line.stroke
+        gCtx.fillStyle = line.fill
         gCtx.fillText(line.txt, 10, 50+i*diff)
         gCtx.strokeText(line.txt, 10, 50+i*diff)
         i++
@@ -76,17 +79,13 @@ function setLineTxt(txt){
 
 function onSelectStyle(style){
     console.log(style)
-    if (style.fill !== undefined) gStyle.fill = style.fill
-    if (style.stroke !== undefined) gStyle.stroke = style.stroke
-    if (style.fontFamily !== undefined) gStyle.fontFamily= style.fontFamily
-    console.log(gStyle)
+    setStyle(style) 
     renderMeme()
 
 }
 
 function onChangeSize(d){
-    gStyle.fontSize +=d*10
-    console.log(gStyle)
+    changeFontSize(d)
     renderMeme()
 }
 
