@@ -1,0 +1,10 @@
+.main-layout {
+    background-color: var(--clrBG);
+}
+
+
+.meme-gallery-layout{
+    background-color: var(--clrBG);
+    width: 100%;
+}
+

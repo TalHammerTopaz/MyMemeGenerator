@@ -4,7 +4,7 @@ var gCanvas
 var gCtx
 
 function init() {
-   
+   console.log('im on')
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
     gCtx.lineWidth = 2
@@ -12,8 +12,27 @@ function init() {
     gCtx.fillStyle = '#2f4f4f'
 
     document.querySelector('.meme-contanier').hidden = true
-    renderGallery()
+    // renderGallery()
+    renderMemeByQueryStringParams()
 }
+
+
+
+function renderMemeByQueryStringParams() {
+    // Retrieve data from the current query-params
+    const queryStringParams = new URLSearchParams(window.location.search)
+  
+    const memeToRender = queryStringParams.get('meme')
+    console.log('memeToRender', memeToRender)
+  
+    if (memeToRender === null) renderGallery()
+    else {
+    setMeme(memeToRender)
+    showMemeDisplay()
+    renderMeme()
+    }
+  }
+  
 
 
 
@@ -31,13 +50,12 @@ function renderMeme(){
     img.src= imgSrc
     img.onload = renderImg.bind(null, img)
 
-    // const style = getStyle()
-    
-    // gCtx.strokeStyle= style.stroke
-    // gCtx.fillStyle = style.fill
-
     setTimeout (renderTxt, 100, meme.lines)
 }
+
+
+
+
 
 
 
@@ -112,5 +130,13 @@ function downloadCanvas(elLink) {
 
 function onSaveMeme(){
     const url = gCanvas.toDataURL()
-    saveMeme(url)
+
+    const queryStringParams = new URLSearchParams(window.location.search)
+    const memeToEdit = queryStringParams.get('meme')
+    if(memeToEdit) editMeme(url, memeToEdit)
+    else saveMeme(url)
+
+    const newUrl = window.location.protocol + '//' + window.location.host + '/index.html' 
+    window.history.pushState({ path: newUrl }, '', newUrl)
+    init()
 }

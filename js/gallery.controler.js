@@ -1,29 +1,22 @@
 'use strict'
 
 
-function init() {
-   
-    gCanvas = document.getElementById('my-canvas')
-    gCtx = gCanvas.getContext('2d')
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = '#2f4f4f'
-    gCtx.fillStyle = '#2f4f4f'
-
-    document.querySelector('.meme-contanier').hidden = true
-    renderGallery()
-}
-
 
 
 function renderGallery(){
-   
+
+    console.log('rendering gallery')
 
     var strHTML =''
     for (var i=0; i<18; i++){
         strHTML +=`<img class="gallery-img" onclick="onImgSelect(${i+1})" src="img/${i+1}.jpg">`
     }
+
     const elImgContainer = document.querySelector('.img-container')
     elImgContainer.innerHTML = strHTML
+
+    document.querySelector('.meme-contanier').hidden = true
+    document.querySelector('.gallary').hidden = false
 }
 
 function onImgSelect(imgId){
@@ -41,6 +34,7 @@ function showMemeDisplay(){
 
 
 function onGenerateRandomMeme(){
+    
     generateRandomMeme()
     showMemeDisplay()
     renderMeme()

@@ -27,8 +27,10 @@ function renderMemeGallary() {
 
 function onEditMeme(idx){
     setMeme(idx)
-    setTimeout(window.open, 500, 'index.html')
-    init()
+    const queryStringParams = `?meme=${idx}`
+    const newUrl = window.location.protocol + '//' + window.location.host + '/index.html' + queryStringParams
+    setTimeout(window.open, 500, newUrl)
+
 
 }
 

@@ -138,6 +138,16 @@ function saveMeme(url){
 }
 
 
+function editMeme(url, idx){
+    console.log(gMemesGallery)
+    gMeme.url = url
+    gMemesGallery[idx] = gMeme
+    console.log( gMemesGallery)
+    _saveMemesToStoarge(gMemesGallery)
+
+}
+
+
 function _saveMemesToStoarge(val){
     saveToStorage(MEMES_STORAGE_KEY, val)
 }
