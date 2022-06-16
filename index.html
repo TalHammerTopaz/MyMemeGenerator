@@ -12,7 +12,7 @@
         <h1>LOGO</h1>
         <nav>
             <a href="#">Gallery</a>
-            <a href="#">About</a>
+            <a href="meme-gallary.html">Memes Gallary</a>
         </nav>
     </header>
 
@@ -82,6 +82,7 @@
             <div class=" control sticker-control"> 😎 😎  😎  😎  </div>       
             
             <div class=" control output-control">
+                <button onclick="onSaveMeme()">Save to Gallery</button>
                 <a href="#" onclick="downloadCanvas(this)" download="">Download</a>
                 <button onclick="uploadImg()">Share On FaceBook</button>
                 <p class="user-msg"></p>
@@ -95,15 +96,17 @@
         
     </main>
     
+ 
     
     
 
     <script src="js/services/util.service.js"></script>
-    <!-- <script src="js/services/storage.service.js"></script>
-    <script src="js/services/meme.i18n.js"></script> -->
+    <script src="js/services/storage.service.js"></script>
+    <!-- <script src="js/services/meme.i18n.js"></script> -->
     <script src="js/services/upload.service.js"></script>
     <script src="js/services/meme.service.js"></script> 
     <script src="js/gallery.controler.js"></script>
     <script src="js/meme.controler.js"></script>
+    <script src="js/meme-gallery.controler.js"></script>
 </body>
 </html>

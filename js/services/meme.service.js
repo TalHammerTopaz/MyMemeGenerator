@@ -2,6 +2,8 @@
 
 /*GLOBAL VARS*/
 
+const MEMES_STORAGE_KEY = 'memesGalleryDB'
+
 const memesSentences = [
     'I never eat falafel',
     'DOMS DOMS EVERYWHERE',
@@ -39,23 +41,28 @@ var gMeme = {
         ]
 }
 
-
-// var gStyle = {
-//     fill: "#A3DBE6",
-//     stroke: "#2f4f4f",
-//     fontSize: 70,
-//     fontFamily: 'Arial',
-// }
-
+var gMemesGallery =_loadMemesFromStoarge() ? _loadMemesFromStoarge() : []
 
 
 function getMeme(){
     return gMeme
 }
 
-// function getStyle(){
-//     return gStyle
-// }
+
+
+function getMemeGallery(){
+    return gMemesGallery
+}
+
+
+
+
+function setMeme(idx){
+    gMeme = gMemesGallery[idx]
+    console.log(gMeme)
+
+}
+
 
 function setStyle(style){
     console.log(style.fill)
@@ -119,4 +126,22 @@ function maxSize(txt){
     const maxSize =  (gCanvas.width / txt.length)*2
     console.log('maxSize:' , maxSize)
     return maxSize
+}
+
+function saveMeme(url){
+    console.log(gMemesGallery)
+    gMeme.url = url
+    gMemesGallery.push(gMeme)
+    console.log( gMemesGallery)
+    _saveMemesToStoarge(gMemesGallery)
+
+}
+
+
+function _saveMemesToStoarge(val){
+    saveToStorage(MEMES_STORAGE_KEY, val)
+}
+
+function _loadMemesFromStoarge(){
+    return loadFromStorage(MEMES_STORAGE_KEY)
 }

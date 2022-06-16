@@ -83,6 +83,7 @@ main{
    
 }
 
+
 .control-borad{
     border: 3px solid #2f4f4f;
     width: fit-content;
@@ -100,3 +101,19 @@ main{
 }
 
 
+.meme-gallery-container{
+    height: 200px;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.meme-img{
+    height: 100%;
+    border: 3px solid #2f4f4f;
+    width: 100%;
+    /* background-image: url(../img/1.jpg); */
+    object-fit: contain;
+    margin: 10px auto;
+    background-size: contain;
+
+}

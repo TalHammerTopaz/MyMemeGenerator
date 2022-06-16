@@ -3,9 +3,8 @@
 var gCanvas
 var gCtx
 
-
-
 function init() {
+   
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
     gCtx.lineWidth = 2
@@ -14,7 +13,6 @@ function init() {
 
     document.querySelector('.meme-contanier').hidden = true
     renderGallery()
-    // renderMeme()
 }
 
 
@@ -26,6 +24,7 @@ function renderMeme(){
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
   
     const meme = getMeme() 
+    console.log(meme)
     var imgSrc = `img/${meme.selectedImgId}.jpg`
 
     var img = new Image()
@@ -39,6 +38,8 @@ function renderMeme(){
 
     setTimeout (renderTxt, 100, meme.lines)
 }
+
+
 
 
 function renderImg(img) {
@@ -106,4 +107,10 @@ function downloadCanvas(elLink) {
     const data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'my-meme.jpg'
+}
+
+
+function onSaveMeme(){
+    const url = gCanvas.toDataURL()
+    saveMeme(url)
 }
