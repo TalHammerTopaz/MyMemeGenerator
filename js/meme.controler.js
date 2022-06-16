@@ -11,7 +11,10 @@ function init() {
     gCtx.strokeStyle = '#2f4f4f'
     gCtx.fillStyle = '#2f4f4f'
 
-    document.querySelector('.meme-contanier').hidden = true
+    var el = document.querySelector('.meme-contanier')
+    console.log(el)
+    el.style.display = "none"
+    // el.hidden = true
     // renderGallery()
     renderMemeByQueryStringParams()
 }

@@ -15,8 +15,8 @@ function renderGallery(){
     const elImgContainer = document.querySelector('.img-container')
     elImgContainer.innerHTML = strHTML
 
-    document.querySelector('.meme-contanier').hidden = true
-    document.querySelector('.gallary').hidden = false
+    document.querySelector('.meme-contanier').style.display = "none"
+    document.querySelector('.gallary').style.display = "block"
 }
 
 function onImgSelect(imgId){
@@ -28,8 +28,9 @@ function onImgSelect(imgId){
 
 
 function showMemeDisplay(){
-    document.querySelector('.meme-contanier').hidden = false
-    document.querySelector('.gallary').hidden = true
+    document.querySelector('.meme-contanier').style.display = "flex"
+    document.querySelector('.gallary').style.display = "none"
+    
 }
 
 
