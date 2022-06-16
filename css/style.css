@@ -11,13 +11,13 @@
 
 /* COMPONENTS */
 @import 'compenents/header.css';
-/* @import 'compenents/card.css'; */
+@import 'compenents/control-board.css';
 @import 'compenents/footer.css';
 @import 'compenents/main-content.css';
 /* @import 'compenents/screens.css';  */
 
 /* MEDIA QUERIES */
-/* @import 'mq/mq.css' */
+@import 'mq/mq.css'
 
 
 

@@ -1,0 +1,30 @@
+
+/* SMALL-MOBILE */
+@media (max-width: 850px) {
+
+    .meme-contanier{
+        flex-direction: column;
+        
+    }
+
+}
+
+
+
+/* MEDIUM */
+@media (min-width: 850px) {
+
+    .meme-contanier{
+        flex-direction: row;
+        
+    }
+   
+
+}
+
+
+
+/* LARGE */
+@media (min-width: 1020px) {
+  
+}

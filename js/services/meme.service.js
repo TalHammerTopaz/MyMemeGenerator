@@ -31,12 +31,13 @@ var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [    {
-                txt: 'I sometimes eat Falafel',
+                txt: 'meme line',
                 align: 'left',
                 fill: "#A3DBE6",
                 stroke: "#2f4f4f",
                 fontFamily:'Arial',
                 fontSize: 40,
+                lineStart: 50,
                 }
         ]
 }
@@ -54,8 +55,13 @@ function getMemeGallery(){
     return gMemesGallery
 }
 
-
-
+function resetMeme(){
+    return {
+        selectedImgId: 5,
+        selectedLineIdx: 0,
+        lines: [_createline()]
+        }
+}
 
 function setMeme(idx){
     gMeme = gMemesGallery[idx]
@@ -84,10 +90,12 @@ function addLine(){
 function switchLine(){
     gMeme.selectedLineIdx++
     if(gMeme.selectedLineIdx > gMeme.lines.length-1) gMeme.selectedLineIdx = 0
-    console.log(gMeme.selectedLineIdx)
+    return gMeme.lines[gMeme.selectedLineIdx].txt
 }
 
-
+function setlinestart(d){
+    gMeme.lines[gMeme.selectedLineIdx].lineStart += d*10
+}
 
 function generateRandomMeme(){
     gMeme.selectedImgId = getRandomInt(1, 18)
@@ -102,30 +110,36 @@ function generateRandomMeme(){
 
 
 function _createline(){
+   
+    var lineStart = gMeme.lines.length? gCanvas.height-gMeme.lines.length*70: 50
     return {
-        txt: 'I sometimes eat Falafel',
+        txt: 'meme line',
         align: 'left',
         fill: "#A3DBE6",
         stroke: "#2f4f4f",
         fontFamily:'Arial',
         fontSize: 40,
+        lineStart: lineStart,
         }
 }
 
 function _createRandomLine(){
-    return {
-        txt: memesSentences[getRandomInt(0, memesSentences.length-1)],   
-        fill: getRandomColor(),
-        stroke: getRandomColor(),
-        fontFamily:'Arial',
-        fontSize: getRandomInt(20, 60),
-    }
+    var newline = _createline()
+    newline.txt = memesSentences[getRandomInt(0, memesSentences.length-1)]
+    newline.fill = getRandomColor()
+    newline.stroke = getRandomColor()
+    newline.fontSize = getRandomInt(20, 60)
+    return newline
+
 } 
 
 function maxSize(txt){
     const maxSize =  (gCanvas.width / txt.length)*2
-    console.log('maxSize:' , maxSize)
     return maxSize
+}
+
+function deleteline(){
+    gMeme.lines.splice(gMeme.selectedLineIdx,1)
 }
 
 function saveMeme(url){

@@ -52,14 +52,16 @@ main{
     width: 100%;
     background-color:var(--clrBG);
     display: flex;
+    align-items: center;
+    justify-content: center;
+        
   
     
 }
 
 .canvas-contanier{
-    width: fit-content;
-    height: fit-content;
-    margin: 30px auto;
+    /* width: fit-content; */
+    margin: 30px;
     border-radius: 5px;
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.36);
 }
@@ -71,12 +73,13 @@ main{
 
 
 .control-borad{
-    border: 1px solid #2f4f4f;
+    /* border: 1px solid #2f4f4f; */
     max-width: 50%;
     padding: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     margin-bottom: 10px;
-    margin: 20px;
+    margin-block-start: 0;
+    /* margin: 20px; */
 
 }
 

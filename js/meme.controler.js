@@ -21,6 +21,7 @@ function init() {
 
 
 
+
 function renderMemeByQueryStringParams() {
     // Retrieve data from the current query-params
     const queryStringParams = new URLSearchParams(window.location.search)
@@ -38,9 +39,7 @@ function renderMemeByQueryStringParams() {
   
 
 
-
-
-function renderMeme(){
+function renderMeme(saving=false){
     console.log('rendering meme')
 
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
@@ -52,12 +51,11 @@ function renderMeme(){
     var img = new Image()
     img.src= imgSrc
     img.onload = renderImg.bind(null, img)
-
-    setTimeout (renderTxt, 100, meme.lines)
+    
+    var idx = saving? false: meme.selectedLineIdx
+    console.log('idx', idx)
+    setTimeout (renderTxt, 100, meme.lines, idx)
 }
-
-
-
 
 
 
@@ -68,26 +66,34 @@ function renderImg(img) {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
 }
 
-function renderTxt(txtLines){
+function renderTxt(txtLines, lineIdx, d){
     console.log('rendering txt')
-    // const style = getStyle()
+    
+    console.log('lineIdx', lineIdx)
     var diff = gCanvas.height/ txtLines.length
-    var i= 0
-    txtLines.forEach(line => { 
-        console.log('im the lin to render', line) 
-      
-        console.log('font size' , line.fontSize)        
+
+    for (let i=0; i<txtLines.length; i++){
+        var line = txtLines[i]
         var currFontSize = (line.fontSize<= maxSize(line.txt))? line.fontSize : maxSize(line.txt)
-        console.log('currSize', currFontSize)
         var font= currFontSize +'px '+ line.fontFamily
         gCtx.font = font
-        console.log(i, diff)
+    
         gCtx.strokeStyle = line.stroke
         gCtx.fillStyle = line.fill
-        gCtx.fillText(line.txt, 10, 50+i*diff)
-        gCtx.strokeText(line.txt, 10, 50+i*diff)
-        i++
-    });
+        console.log('im here', d)
+        gCtx.fillText(line.txt, 10, line.lineStart)
+        gCtx.strokeText(line.txt, 10, line.lineStart)
+
+        if (i === lineIdx){
+            gCtx.lineWidth = 1
+            gCtx.strokeStyle = "#000000"
+            gCtx.strokeRect(8, line.lineStart-32, gCanvas.width-16, 40) 
+        }
+
+    }
+   
+        
+    
 
 }
 
@@ -117,29 +123,51 @@ function onAddLine(){
 }
 
 function onSwitchLine(){
-    switchLine()
+    const txt = switchLine()
     var elInput = document.querySelector('.text-input')
-    elInput.value=''
+    elInput.value= txt
     renderMeme()
 } 
 
 
 function downloadCanvas(elLink) {
-    const data = gCanvas.toDataURL()
-    elLink.href = data
-    elLink.download = 'my-meme.jpg'
-}
+    renderMeme(true)
+    setTimeout(()=>{
+        const data = gCanvas.toDataURL()
+        elLink.href = data
+        elLink.download = 'my-meme.jpg'}, 300)}
 
 
 function onSaveMeme(){
-    const url = gCanvas.toDataURL()
 
-    const queryStringParams = new URLSearchParams(window.location.search)
-    const memeToEdit = queryStringParams.get('meme')
-    if(memeToEdit) editMeme(url, memeToEdit)
-    else saveMeme(url)
+    renderMeme(true)
 
-    const newUrl = window.location.protocol + '//' + window.location.host + '/index.html' 
-    window.history.pushState({ path: newUrl }, '', newUrl)
-    init()
+    setTimeout(()=>{
+        const url = gCanvas.toDataURL()
+    
+        const queryStringParams = new URLSearchParams(window.location.search)
+        const memeToEdit = queryStringParams.get('meme')
+        if(memeToEdit) editMeme(url, memeToEdit)
+        else saveMeme(url)
+
+        const newUrl = window.location.protocol + '//' + window.location.host + '/meme-gallary.html'
+        setTimeout(window.open, 500, newUrl)
+
+    }, 100)
+    
+}
+
+
+function onDelete(){ 
+    deleteline()
+    var elInput = document.querySelector('.text-input')
+    elInput.value= ''
+    renderMeme()
+}
+
+function onLineMove(d){
+    console.log(d)
+    setlinestart(d)
+    renderMeme()
+
 }
