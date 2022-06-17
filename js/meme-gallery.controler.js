@@ -19,6 +19,9 @@ function renderMemeGallary() {
         var elImg = document.querySelector(selector)
         var url = 'url(' + memes[i].url +')'
         elImg.style.backgroundImage = url
+        console.log(memes[i].selectedImgId, 'memes[i].selectedImgId')
+        var ratio = getRatio(memes[i].selectedImgId)
+        elImg.style.minHeight = 270*ratio +"px"
     }      
 
 

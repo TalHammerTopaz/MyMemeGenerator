@@ -20,14 +20,24 @@
 
         <div class="gallary">   
 
-            <div class="gallary-header flex">
+            <div class="gallary-header flex space-between">
                 <div class="search">
-                    <input type="text" class= "search-input" 
-                        oninput="onSearch(this.value)"
-                        placeholder="Search something ..." />
-                        <img src="img/search-icon.png">
+               <input list="keywords" oninput="onSearch(value)" name="keywords" id="keyword" placeholder="Search something ...">
+                    <datalist id="keywords">
+                        <option value="Bad">
+                        <option value="Funny">
+                        <option value="Cute">
+                        <option value="Animal">
+                        <option value="Baby">
+                        <option value="President">
+                        <option value="Movie">
+                        <option value="Cat">
+                        <option value="Dog">
+                    </datalist>
+                    <img src="img/search-icon.png">
+
                 </div>
-                <h2>some search words...</h2>
+                <h2 class="search-words">some search words...</h2>
             </div>
             <button onclick="onGenerateRandomMeme()" >I'm flexibale</button> 
 
@@ -88,7 +98,16 @@
                 onchange = "onSelectStyle({stroke: this.value})">
             </div>
             
-            <!-- <div class=" control sticker-control"> 😎 😎  😎  😎  </div>        -->
+            <div class="sticker-control">
+                
+                <span class="sticker" onclick="onAddSticker('😎')">😎 </span>
+                <span class="sticker" onclick="onAddSticker('🎁')">🎁 </span>
+                <span class="sticker" onclick="onAddSticker('😠')">😠 </span>
+                <span class="sticker" onclick="onAddSticker('👌')">👌 </span>
+                <span class="sticker" onclick="onAddSticker('🐶 ')">🐶 </span>
+                
+            </div>     
+           
             
             <div class=" control output-control">
                 <button onclick="onSaveMeme()">Save to Gallery</button>
@@ -121,6 +140,7 @@
     <!-- <script src="js/services/meme.i18n.js"></script> -->
     <script src="js/services/upload.service.js"></script>
     <script src="js/services/meme.service.js"></script> 
+    <script src="js/services/gallery.service.js"></script> 
     <script src="js/gallery.controler.js"></script>
     <script src="js/meme.controler.js"></script>
     <script src="js/meme-gallery.controler.js"></script>

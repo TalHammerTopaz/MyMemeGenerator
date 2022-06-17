@@ -23,24 +23,29 @@ const memesSentences = [
   ]
 
 
-var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
 
-var gImgs = [{id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat']}]
 
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [    {
+                posLine: {x:10, y:50} ,
                 txt: 'meme line',
                 align: 'left',
                 fill: "#A3DBE6",
                 stroke: "#2f4f4f",
                 fontFamily:'Arial',
                 fontSize: 40,
-                lineStart: 50,
                 }
         ]
 }
+
+var gMove = {
+            isMove: false,
+            diffX:0,
+            diffY:0,
+            }
+
 
 var gMemesGallery =_loadMemesFromStoarge() ? _loadMemesFromStoarge() : []
 
@@ -82,8 +87,8 @@ function changeFontSize(d){
     gMeme.lines[gMeme.selectedLineIdx].fontSize +=d*10
 }
 
-function addLine(){
-    gMeme.lines.push(_createline())
+function addLine(value= 'meme line'){
+    gMeme.lines.push(_createline(value))
     console.log(gMeme)
 }
 
@@ -94,7 +99,7 @@ function switchLine(){
 }
 
 function setlinestart(d){
-    gMeme.lines[gMeme.selectedLineIdx].lineStart += d*10
+    gMeme.lines[gMeme.selectedLineIdx].posLine.y += d*10
 }
 
 function generateRandomMeme(){
@@ -109,17 +114,17 @@ function generateRandomMeme(){
 }
 
 
-function _createline(){
+function _createline(value){
    
     var lineStart = gMeme.lines.length? gCanvas.height-gMeme.lines.length*70: 50
     return {
-        txt: 'meme line',
+        posLine: {x:10, y:lineStart},
+        txt: value,
         align: 'left',
         fill: "#A3DBE6",
         stroke: "#2f4f4f",
         fontFamily:'Arial',
         fontSize: 40,
-        lineStart: lineStart,
         }
 }
 
@@ -168,4 +173,42 @@ function _saveMemesToStoarge(val){
 
 function _loadMemesFromStoarge(){
     return loadFromStorage(MEMES_STORAGE_KEY)
+}
+
+
+function lineClicked(clickedPos) {
+    if(gMove.isMove) {
+        gMove.isMove =!gMove.isMove
+        return
+    }
+
+    for (let i=0; i<gMeme.lines.length; i++){  
+        var posX = gMeme.lines[i].posLine.x
+        var posY = gMeme.lines[i].posLine.y
+        console.log('posX, posY', posX, posY)
+        console.log('clickedPos', clickedPos)
+        console.log( posX, gCanvas.width-8, posY-32,  posY+8 )
+        if (clickedPos.x > posX-2 && clickedPos.x <  posX+420 &&  
+            clickedPos.y > posY-40 &&  clickedPos.y < posY+8) 
+            { console.log('yes')
+            gMeme.selectedLineIdx = i
+            gMove.isMove = true
+            gMove.diffX= clickedPos.x - gMeme.lines[i].posLine.x
+            gMove.diffY = clickedPos.y - gMeme.lines[i].posLine.y
+        }
+
+    }
+   
+}
+
+
+function isMoving(){
+    return gMove.isMove
+}
+
+function moveLine(pos){
+    console.log('pos', pos)
+    gMeme.lines[gMeme.selectedLineIdx].posLine.x =  pos.x - gMove.diffX
+    gMeme.lines[gMeme.selectedLineIdx].posLine.y = pos.y - gMove.diffY
+   
 }

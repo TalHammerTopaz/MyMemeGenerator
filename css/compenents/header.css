@@ -34,7 +34,8 @@ nav :not(:last-child){
     border:none;
     font-family: MontserratR;
     font-size: 1.5em;
-    padding: 0;
+    padding: 0.4em;
+    border-bottom: 2px solid var(--clrBlack);
     
 }
 
@@ -47,11 +48,12 @@ nav :not(:last-child){
 
 .search{
     margin-inline-start: 2em;
-    border-bottom: 2px solid var(--clrBlack);
 
 }
 
-.gallary-header h2{
-    margin-inline-start: 5em;
+.search-words{
+    max-width: 50%;
+    margin-inline-start: 2em;
 }
+
 

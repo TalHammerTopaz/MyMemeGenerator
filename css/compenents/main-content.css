@@ -1,5 +1,5 @@
 .gallery-img{
-    width: 270px;
+    /* width: 270px; */
     height: 270px;
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.36);
     padding: 5px;
@@ -19,7 +19,7 @@
 
 
 .meme-img{
-    min-height: 270px;
+    background-repeat: no-repeat;
     min-width: 270px;
     /* background-image: url(../img/1.jpg); */
     /* object-fit: contain; */
@@ -89,5 +89,14 @@ main{
     color: darkslategray;
 }
 
+.sticker{
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+}
 
-
+.file-input-btn{
+    padding: 1.5em;
+    border: none;
+    font-family: MontserratR;
+}
