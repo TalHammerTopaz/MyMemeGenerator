@@ -139,14 +139,14 @@ function lineClicked(clickedPos) {
     }
     
     for (let i=0; i<gMeme.lines.length; i++){  
+       
+        var txtLength = mesureTxt(gMeme.lines[i].txt)
+
         var posX = gMeme.lines[i].posLine.x
         var posY = gMeme.lines[i].posLine.y
-        console.log('posX, posY', posX, posY)
-        console.log('clickedPos', clickedPos)
-        console.log( posX, gCanvas.width-8, posY-32,  posY+8 )
-        if (clickedPos.x > posX-2 && clickedPos.x <  posX+420 &&  
-            clickedPos.y > posY-40 &&  clickedPos.y < posY+8) 
-            { console.log('yes')
+        
+        if (clickedPos.x > posX-2 && clickedPos.x <  posX+txtLength &&  
+            clickedPos.y > posY-40 &&  clickedPos.y < posY+8) {
             gMeme.selectedLineIdx = i
             gMove.isMove = true
             gMove.diffX= clickedPos.x - gMeme.lines[i].posLine.x
@@ -182,8 +182,8 @@ function _createline(value=''){
         fontSize: 40,
     }
 
+    if(gMeme && gMeme.lines.length) line.posLine.y = gMeme.lines.length*20 + 50
     if(value) line.txt = value
-    if(gMeme && gMeme.lines.length) line.posLine.y = gCanvas.height-gMeme.lines.length*70 
     return line
 }
 

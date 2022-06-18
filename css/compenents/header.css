@@ -1,6 +1,8 @@
 header{
     background-color: var(--clrOrange);
-    margin: 10px;
+    margin: 1em;
+    margin: 0;
+    padding: 0;
     /* min-height: 66px; */
    
 }
@@ -23,6 +25,11 @@ nav :not(:last-child){
     border-inline-end: 2px solid var(--clrBlack);
 }
 
+nav :last-child{
+    margin-inline-end: 2em;
+    margin-inline-start: 2em;
+}
+
 /* GALLAERY HEADER */
 
 
@@ -30,6 +37,7 @@ nav :not(:last-child){
     padding: 2rem;
     margin: 1rem;
     gap: 1rem;
+    align-items:baseline;
 }
 
 .gallary-header input{
@@ -50,12 +58,16 @@ nav :not(:last-child){
 
 .search{
     margin-inline-start: 2em;
+    min-width: 50%;
+
 
 }
 
 .search-words{
-    max-width: 50%;
+    /* min-width: 70%;  */
     margin-inline-start: 2em;
+    margin-bottom: 0;
+    font-size: 5em;
 }
 
 

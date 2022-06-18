@@ -3,17 +3,11 @@
 var gCanvas
 var gCtx
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
-var gDimenstions ={
-    width: 450,
-    height: 450,
-}
 
 
 function init() {
  
     gCanvas = document.getElementById('my-canvas')
-    gCanvas.style.width = gDimenstions.width +"px"
-    gCanvas.style.height = gDimenstions.height +"px"
     gCtx = gCanvas.getContext('2d')
 
     gCtx.lineWidth = 2
@@ -22,6 +16,7 @@ function init() {
 
     renderMemeByQueryStringParams()
     addListeners()
+
 }
 
 
@@ -51,9 +46,9 @@ function renderMeme(saving=false){
     const meme = getMeme() 
   
     var ratio = getRatio(meme.selectedImgId)
-    gCanvas.style.height = gDimenstions.height* ratio +"px"
+    gCanvas.height = gCanvas.width*ratio 
 
-    //render img
+      //render img
     var imgSrc = `img/${meme.selectedImgId}.jpg`
     var img = new Image()
     img.src= imgSrc
@@ -92,11 +87,14 @@ function renderTxt(txtLines, lineIdx){
         gCtx.fillText(line.txt, line.posLine.x, line.posLine.y)
         gCtx.strokeText(line.txt, line.posLine.x, line.posLine.y)
 
+        var txtLength = mesureTxt(line.txt)
+
         //mark selected line with rect
         if (i === lineIdx){
             gCtx.lineWidth = 1
             gCtx.strokeStyle = "#000000"
-            gCtx.strokeRect(line.posLine.x-2, line.posLine.y-32, line.posLine.x+410, 40) 
+            // gCtx.strokeRect(line.posLine.x-2, line.posLine.y-32, line.posLine.x+410, 40) 
+            gCtx.strokeRect(line.posLine.x-2, line.posLine.y-32, txtLength+8, 40) 
         }
 
     }         
@@ -184,6 +182,21 @@ function onLineMove(d){
 }
 
 
+//add sticker
+function onAddSticker(value){
+    addLine(value)
+    renderMeme()
+    
+}
+
+
+//measure txt length
+function mesureTxt(txt){
+    var textLength =  gCtx.measureText(txt).width 
+    return textLength
+}
+
+
 // add event listeners
 
 function addListeners() {
@@ -195,12 +208,18 @@ function addListeners() {
 function addMouseListeners() {
     gCanvas.addEventListener('mousemove', onMove)
     gCanvas.addEventListener('mousedown', onDown)
+    window.addEventListener('resize', () => {
+        resizeCanvas()
+    })
  
 }
 
 function addTouchListeners() {
     gCanvas.addEventListener('touchmove', onMove)
     gCanvas.addEventListener('touchstart', onDown)
+    window.addEventListener('resize', () => {
+        resizeCanvas()
+    })
     
 }
 
@@ -221,14 +240,19 @@ function onMove(ev) {
     moveLine(pos)
     renderMeme()
 }
-   
 
-//add sticker
-function onAddSticker(value){
-    addLine(value)
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.meme-contanier')
+    if (elContainer.offsetWidth < 470){
+        gCanvas.width = elContainer.offsetWidth-20
+        gCanvas.height = gCanvas.width
+    }
     renderMeme()
-    
 }
+
+
+   
 
 // get event position on canvas
 function getEvPos(ev) {
@@ -253,3 +277,6 @@ function getEvPos(ev) {
     return pos
 }
 
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
+}

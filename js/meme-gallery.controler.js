@@ -25,6 +25,7 @@ function renderMemeGallary() {
 function memeGallery(){
     display('meme-gallery')
     renderMemeGallary()
+    document.body.classList.remove('menu-open')
 }
 
 

@@ -67,7 +67,7 @@ function renderSearchWords(){
     for (const word in searchWords) {
         var selector = '.'+word+''
         var elWord = document.querySelector(selector)
-        elWord.style.fontSize = searchWords[word]>8 ? searchWords[word]*3 +"px" :0
+        elWord.style.fontSize = searchWords[word]>8 ? searchWords[word]*3/16 +"rem" :0
       }   
 }
 

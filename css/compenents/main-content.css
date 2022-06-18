@@ -57,14 +57,15 @@ main{
     justify-content: center;
         
   
-    
+    margin: 0;
+    padding: 0;
 }
 
 .canvas-contanier{
-    /* width: fit-content; */
+    width: fit-content;
     margin: 30px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.36);
+    border-radius: 2px;
+   
 }
 
 #my-canvas{
@@ -75,7 +76,7 @@ main{
 
 .control-borad{
     /* border: 1px solid #2f4f4f; */
-    max-width: 50%;
+    /* max-width: 50%; */
     padding: 10px;
     /* border-radius: 5px; */
     margin-bottom: 10px;
@@ -109,4 +110,25 @@ main{
 
 .meme-gallery-section h1{
     font-size: 5em;
+}
+
+
+.main-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    filter: blur(4px);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    
+    transition: opacity .6s;
+}
+
+body.menu-open .main-screen {
+    pointer-events: auto;
+    opacity: 1;
 }
