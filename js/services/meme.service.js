@@ -25,20 +25,8 @@ const memesSentences = [
 
 
 
-var gMeme = {
-    selectedImgId: 5,
-    selectedLineIdx: 0,
-    lines: [    {
-                posLine: {x:10, y:50} ,
-                txt: 'meme line',
-                align: 'left',
-                fill: "#A3DBE6",
-                stroke: "#2f4f4f",
-                fontFamily:'Arial',
-                fontSize: 40,
-                }
-        ]
-}
+var gMeme = createMeme()
+
 
 var gMove = {
             isMove: false,
@@ -50,6 +38,8 @@ var gMove = {
 var gMemesGallery =_loadMemesFromStoarge() ? _loadMemesFromStoarge() : []
 
 
+/////////////////////////////////////////
+
 function getMeme(){
     return gMeme
 }
@@ -60,7 +50,7 @@ function getMemeGallery(){
     return gMemesGallery
 }
 
-function resetMeme(){
+function createMeme(){
     return {
         selectedImgId: 5,
         selectedLineIdx: 0,
@@ -68,36 +58,37 @@ function resetMeme(){
         }
 }
 
+//set meme to edit:
 function setMeme(idx){
     gMeme = gMemesGallery[idx]
-    console.log(gMeme)
-
 }
 
-
+//set line style: fint, fill, stroke
 function setStyle(style){
-    console.log(style.fill)
     if (style.fill !== undefined) gMeme.lines[gMeme.selectedLineIdx].fill = style.fill
     if (style.stroke !== undefined) gMeme.lines[gMeme.selectedLineIdx].stroke = style.stroke
     if (style.fontFamily !== undefined) gMeme.lines[gMeme.selectedLineIdx].fontFamily= style.fontFamily
-    console.log(gMeme)
 }
 
+//change font size:
 function changeFontSize(d){
     gMeme.lines[gMeme.selectedLineIdx].fontSize +=d*10
 }
 
-function addLine(value= 'meme line'){
+function addLine(value=0){
     gMeme.lines.push(_createline(value))
     console.log(gMeme)
 }
 
+//selectLine:
 function switchLine(){
     gMeme.selectedLineIdx++
     if(gMeme.selectedLineIdx > gMeme.lines.length-1) gMeme.selectedLineIdx = 0
     return gMeme.lines[gMeme.selectedLineIdx].txt
 }
 
+
+//changing position of line with up/down btns
 function setlinestart(d){
     gMeme.lines[gMeme.selectedLineIdx].posLine.y += d*10
 }
@@ -108,71 +99,36 @@ function generateRandomMeme(){
     var lineCount = getRandomInt(1, 2)
     for (let i=0; i<lineCount; i++){
         gMeme.lines.push(_createRandomLine())
-    }
-    console.log(gMeme)
+    } 
    
 }
 
-
-function _createline(value){
-   
-    var lineStart = gMeme.lines.length? gCanvas.height-gMeme.lines.length*70: 50
-    return {
-        posLine: {x:10, y:lineStart},
-        txt: value,
-        align: 'left',
-        fill: "#A3DBE6",
-        stroke: "#2f4f4f",
-        fontFamily:'Arial',
-        fontSize: 40,
-        }
-}
-
-function _createRandomLine(){
-    var newline = _createline()
-    newline.txt = memesSentences[getRandomInt(0, memesSentences.length-1)]
-    newline.fill = getRandomColor()
-    newline.stroke = getRandomColor()
-    newline.fontSize = getRandomInt(20, 60)
-    return newline
-
-} 
-
+//calculate max size for txt
 function maxSize(txt){
     const maxSize =  (gCanvas.width / txt.length)*2
     return maxSize
 }
 
+//delete line from gMeme
 function deleteline(){
     gMeme.lines.splice(gMeme.selectedLineIdx,1)
 }
 
+
+//save meme to meme-gallery
 function saveMeme(url){
-    console.log(gMemesGallery)
     gMeme.url = url
     gMemesGallery.push(gMeme)
-    console.log( gMemesGallery)
     _saveMemesToStoarge(gMemesGallery)
-
+    
 }
 
-
+//edit saved meme
 function editMeme(url, idx){
-    console.log(gMemesGallery)
     gMeme.url = url
     gMemesGallery[idx] = gMeme
-    console.log( gMemesGallery)
     _saveMemesToStoarge(gMemesGallery)
-
-}
-
-
-function _saveMemesToStoarge(val){
-    saveToStorage(MEMES_STORAGE_KEY, val)
-}
-
-function _loadMemesFromStoarge(){
-    return loadFromStorage(MEMES_STORAGE_KEY)
+    
 }
 
 
@@ -181,7 +137,7 @@ function lineClicked(clickedPos) {
         gMove.isMove =!gMove.isMove
         return
     }
-
+    
     for (let i=0; i<gMeme.lines.length; i++){  
         var posX = gMeme.lines[i].posLine.x
         var posY = gMeme.lines[i].posLine.y
@@ -196,9 +152,9 @@ function lineClicked(clickedPos) {
             gMove.diffX= clickedPos.x - gMeme.lines[i].posLine.x
             gMove.diffY = clickedPos.y - gMeme.lines[i].posLine.y
         }
-
+        
     }
-   
+    
 }
 
 
@@ -207,8 +163,47 @@ function isMoving(){
 }
 
 function moveLine(pos){
-    console.log('pos', pos)
     gMeme.lines[gMeme.selectedLineIdx].posLine.x =  pos.x - gMove.diffX
     gMeme.lines[gMeme.selectedLineIdx].posLine.y = pos.y - gMove.diffY
+    
+}
+
+
+// create meme line
+function _createline(value=''){
    
+    var line = {
+        posLine: {x:10, y:50},
+        txt: 'Say something',
+        align: 'left',
+        fill: "#A3DBE6",
+        stroke: "#2f4f4f",
+        fontFamily:'Arial',
+        fontSize: 40,
+    }
+
+    if(value) line.txt = value
+    if(gMeme && gMeme.lines.length) line.posLine.y = gCanvas.height-gMeme.lines.length*70 
+    return line
+}
+
+//rendom line on flexible
+function _createRandomLine(){
+    var newline = _createline()
+    newline.txt = memesSentences[getRandomInt(0, memesSentences.length-1)]
+    newline.fill = getRandomColor()
+    newline.stroke = getRandomColor()
+    newline.fontSize = getRandomInt(20, 60)
+    return newline
+
+} 
+
+//save to storage
+function _saveMemesToStoarge(val){
+    saveToStorage(MEMES_STORAGE_KEY, val)
+}
+
+//load from storage
+function _loadMemesFromStoarge(){
+    return loadFromStorage(MEMES_STORAGE_KEY)
 }

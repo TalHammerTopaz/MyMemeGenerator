@@ -13,8 +13,10 @@ header img{
 
 /* NAV BAR */
 
-nav a{
-    padding: 0 0.8em; 
+nav li{
+    padding: 0 0.8rem; 
+    list-style: none;
+    display: inline;
 }
 
 nav :not(:last-child){
@@ -25,9 +27,9 @@ nav :not(:last-child){
 
 
 .gallary-header{
-    padding: 20px;
-    margin: 10px;
-    gap: 30px;
+    padding: 2rem;
+    margin: 1rem;
+    gap: 1rem;
 }
 
 .gallary-header input{

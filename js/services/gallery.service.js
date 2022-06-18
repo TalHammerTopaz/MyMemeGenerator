@@ -28,18 +28,18 @@ var gImgs = [
 
 var gFilter
 
+// set filter for rendering gallery images
 function setFilter(value){
     value = value.toLowerCase()
     gFilter = value
     if(gKeywordSearchCountMap[value]) updateCoutMap(value)
-    console.log(gKeywordSearchCountMap)
     return gFilter
 }
 
+//get images to render according to filter
 function getImagesToRender(){
     if(!gFilter) return gImgs
     var imgs = gImgs.filter ( img => img.keywords.includes(gFilter))
-    console.log(imgs)
     return imgs
 }
 
@@ -48,15 +48,14 @@ function getSearchWordsMap(){
     return gKeywordSearchCountMap
 }
 
+//increase search redundancy of value
 function updateCoutMap(key){
     key = key.toLowerCase()
     gKeywordSearchCountMap[key]++
 }
 
+//get ratio img height/width to support various ratios
 function getRatio(id){
-    console.log(id, 'id')
     const img = gImgs.find(img => img.id === id)
-    console.log('img', img)
-    console.log('img.ratio', img.ratio)
     return img.ratio
 }

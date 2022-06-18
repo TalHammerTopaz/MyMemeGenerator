@@ -2,13 +2,10 @@
 
 
 
-
+//render home img gallery
 function renderGallery(){
-
-    console.log('rendering gallery')
-
+    
     const imgs = getImagesToRender()
-    console.log(imgs)
 
     var strHtmls = imgs.map(
         img => `<img class="gallery-img" 
@@ -19,46 +16,49 @@ function renderGallery(){
     elImgContainer.innerHTML = strHtmls.join('')
 
     renderSearchWords() 
-
-    document.querySelector('.meme-contanier').style.display = "none"
-    document.querySelector('.gallary').style.display = "block"
+    display('gallery')
+   
 }
 
+
+
+//display section (home-gallery/meme-editor/ meme-gallery) according to selection
+function display(value){
+    document.querySelector('.gallary').style.display = (value === 'gallery') ? 'block' : 'none'
+    document.querySelector('.meme-contanier').style.display = (value === 'meme')?  'flex' : 'none'
+    document.querySelector('.meme-gallery-section').style.display = (value === 'meme-gallery')? 'block' : 'none'
+}
+
+//show meme editor with selected image
 function onImgSelect(imgId){
     const meme = getMeme() 
     meme.selectedImgId =imgId
-    showMemeDisplay()
+    display('meme')
     renderMeme()
 }
 
 
-function showMemeDisplay(){
-    document.querySelector('.meme-contanier').style.display = "flex"
-    document.querySelector('.gallary').style.display = "none"
-    
-}
-
-
+//generate random meme
 function onGenerateRandomMeme(){  
     generateRandomMeme()
-    showMemeDisplay()
+    display('meme')
     renderMeme()
 }
 
-
+//set search filter
 function onSearch(value){
-    console.log(value)
+    if (value.innerText) value = value.innerText
     setFilter(value)
     renderGallery()
 }
 
-
+//render search words according to clicks
 function renderSearchWords(){
     var searchWords = getSearchWordsMap()
     var words = Object.keys(searchWords)
     var strHtmls = words.map(
         word =>  `<span class="${word}" 
-                onclick="searchClick(this)" 
+                onclick="onSearch(this)" 
                 >${word}</span>`)
 
     const elWords = document.querySelector('.search-words')
@@ -69,12 +69,5 @@ function renderSearchWords(){
         var elWord = document.querySelector(selector)
         elWord.style.fontSize = searchWords[word]>8 ? searchWords[word]*3 +"px" :0
       }   
-}
-
-function searchClick(word){
-    console.log(word.innerText)
-    setFilter(word.innerText)  
-    renderGallery()
-  
 }
 

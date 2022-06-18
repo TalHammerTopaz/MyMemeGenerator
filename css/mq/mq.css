@@ -2,16 +2,28 @@
 /* SMALL-MOBILE */
 @media (max-width: 850px) {
 
+  
+    footer {
+        background-color: var(--clrOrange);
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 0;
+    }
+
+
     .meme-contanier{
         flex-direction: column;
         
     }
 
+    
+
 }
 
 
 
-/* MEDIUM */
+/* Desktop */
 @media (min-width: 850px) {
 
     .meme-contanier{
@@ -23,8 +35,3 @@
 }
 
 
-
-/* LARGE */
-@media (min-width: 1020px) {
-  
-}

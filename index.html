@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>MyMemeGenerator</title>
 </head>
+
 <body onload="init()">
+
     <header class="flex space-between">
         <img src="img/LOGO.png">
         <nav class="flex align-center">
-            <a href="index.html">Home</a>
-            <a href="meme-gallary.html">My Memes</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li onclick="memeGallery()">My Memes</li>
+            </ul>
         </nav>
     </header>
 
     <main class="flex center">
 
-        <div class="gallary">   
+        <section class="gallary">   
 
             <div class="gallary-header flex space-between">
                 <div class="search">
@@ -43,106 +47,113 @@
 
             <div class="main-layout img-container"></div>
 
-        </div>
+        </section>
         
-    <div class="meme-contanier">
+        <section class="meme-contanier">
 
-            <div class="canvas-contanier">
-                <canvas id="my-canvas" 
-                height="450" 
-                width="450"         
-                >
-                </canvas>
+                <div class="canvas-contanier">
+                    <canvas id="my-canvas" 
+                    height="450" 
+                    width="450" >
+                    </canvas>
+                </div>
+    
+        
+            
+            <div class="control-borad">
+                
+                <div class="control">
+                    <input type="text" class= "text-input" 
+                    oninput="setLineTxt(this.value)"
+                    placeholder="Start typing..." />
+                </div>
+                
+                <div class="control">
+                    <button  class="btn-control" onclick = "onAddLine()"><img src="img/add.png"></button>
+                    <button class="btn-control" onclick = "onSwitchLine()"><img src="img/up-and-down-opposite-double-arrows-side-by-side.png"></button>
+                    <button  class="btn-control" onclick = "onLineMove(-1)"><img src="img/arrowup.png"></button>
+                    <button  class="btn-control" onclick = "onLineMove(1)"><img src="img/arrowdown.png"></button>
+                    <button  class="btn-control" onclick = "onDelete()"><img src="img/trash.png"></button>
+                </div>
+                
+                <div class="control">
+                    <select class="font-input" name="font" id="font" onchange = "onSelectStyle({fontFamily: this.value})">
+                        <option value="Tahoma">Tahoma </option>
+                        <option value="fantasy">Fantazy</option>
+                        <option value="Ariel">Ariel</option>
+                    </select>
+                        <button  class="btn-control" onclick = "onChangeSize(1)"><img src="img/increase font - icon.png"></button>
+                        <button  class="btn-control" onclick = "onChangeSize(-1)"><img src="img/decrease font - icon.png"</button>
+            
+                </div>
+                    
+                <div class=" control">    
+                        
+                    <label class="btn-control"  for="fillColor"><img src="img/paint-board-and-brush.png"></label>
+                    <input type="color" id="fillColor" name="fillColor" value="#A3DBE6"
+                    onchange = "onSelectStyle({fill: this.value})">
+                    
+                    <label class="btn-control"  for="strokeColor"><img src="img/text stroke.png"></label>
+                    <input type="color" id="strokeColor" name="strokeColor" value="#2f4f4f"
+                    onchange = "onSelectStyle({stroke: this.value})">
+                </div>
+                    
+                <div class="sticker-control">
+                    
+                    <span class="sticker" onclick="onAddSticker('😎')">😎 </span>
+                    <span class="sticker" onclick="onAddSticker('🎁')">🎁 </span>
+                    <span class="sticker" onclick="onAddSticker('😠')">😠 </span>
+                    <span class="sticker" onclick="onAddSticker('👌')">👌 </span>
+                    <span class="sticker" onclick="onAddSticker('🐶 ')">🐶 </span>
+                    
+                </div>     
+                
+                    
+                <div class=" control output-control">
+                    <button onclick="onSaveMeme()">Save to Gallery</button>
+                    <br>
+                    <a class="output" href="#" onclick="downloadCanvas(this)" download="meme.jpg">Download</a>
+                    <a class="output" onclick="uploadImg()">Share On FaceBook</a>
+                    <p class="user-msg"></p>
+                    <div class="share-container"></div>
+                </div> 
+                    
+                
             </div>
-   
-    
-    
-    <div class="control-borad">
+            
+        </section>
         
-        <div class="control">
-            <input type="text" class= "text-input" 
-            oninput="setLineTxt(this.value)"
-            placeholder="Start typing..." />
-        </div>
-        
-        <div class="line-control">
-            <button  class="btn-control" onclick = "onAddLine()"><img src="img/add.png"></button>
-            <button class="btn-control" onclick = "onSwitchLine()"><img src="img/up-and-down-opposite-double-arrows-side-by-side.png"></button>
-            <button  class="btn-control" onclick = "onLineMove(-1)"><img src="img/arrowup.png"></button>
-            <button  class="btn-control" onclick = "onLineMove(1)"><img src="img/arrowdown.png"></button>
-            <button  class="btn-control" onclick = "onDelete()"><img src="img/trash.png"></button>
-        </div>
-        
-        <div class="control text-control">
-            <select class="font-input" name="font" id="font" onchange = "onSelectStyle({fontFamily: this.value})">
-                <option value="Tahoma">Tahoma </option>
-                <option value="fantasy">Fantazy</option>
-                <option value="Ariel">Ariel</option>
-            </select>
-                <button  class="btn-control" onclick = "onChangeSize(1)"><img src="img/increase font - icon.png"></button>
-                <button  class="btn-control" onclick = "onChangeSize(-1)"><img src="img/decrease font - icon.png"</button>
-    
-                <!-- <button>AlignLeft</button>
-                <button>AlignCenter</button>
-                <button>AlignRight</button> -->
-            </div>
-            
-            <div class=" control advanced-control">    
-                
-                <label class="btn-control"  for="fillColor"><img src="img/paint-board-and-brush.png"></label>
-                <input type="color" id="fillColor" name="fillColor" value="#A3DBE6"
-                onchange = "onSelectStyle({fill: this.value})">
-                
-                <label class="btn-control"  for="strokeColor"><img src="img/text stroke.png"></label>
-                <input type="color" id="strokeColor" name="strokeColor" value="#2f4f4f"
-                onchange = "onSelectStyle({stroke: this.value})">
-            </div>
-            
-            <div class="sticker-control">
-                
-                <span class="sticker" onclick="onAddSticker('😎')">😎 </span>
-                <span class="sticker" onclick="onAddSticker('🎁')">🎁 </span>
-                <span class="sticker" onclick="onAddSticker('😠')">😠 </span>
-                <span class="sticker" onclick="onAddSticker('👌')">👌 </span>
-                <span class="sticker" onclick="onAddSticker('🐶 ')">🐶 </span>
-                
-            </div>     
-           
-            
-            <div class=" control output-control">
-                <button onclick="onSaveMeme()">Save to Gallery</button>
-                <br>
-                <a class="output" href="#" onclick="downloadCanvas(this)" download="">Download</a>
-                <a class="output" onclick="uploadImg()">Share On FaceBook</a>
-                <p class="user-msg"></p>
-                <div class="share-container"></div>
-            </div> 
-            
-            
-        </div>
-        
-    </div>
+        <section class="meme-gallery-section">
 
-    
-</main>
+            <h1>My Memes</h1>
 
-<footer>
-    <img src="img/LOGO.png">
-    <h3>Tal Hammer Topaz | 2022</h3>
+            <div class="flex center">
+                <div class="meme-gallery-layout">
+                    <div class="meme-gallery-container "></div>
+                </div>
+            </div>   
 
-</footer>
+        </section>
+
+
+    </main>
+
+    <footer>
+        <img src="img/LOGO.png">
+        <h3>Tal Hammer Topaz | 2022</h3>
+
+    </footer>
  
     
     
 
     <script src="js/services/util.service.js"></script>
     <script src="js/services/storage.service.js"></script>
-    <!-- <script src="js/services/meme.i18n.js"></script> -->
     <script src="js/services/upload.service.js"></script>
     <script src="js/services/meme.service.js"></script> 
     <script src="js/services/gallery.service.js"></script> 
-    <script src="js/gallery.controler.js"></script>
-    <script src="js/meme.controler.js"></script>
     <script src="js/meme-gallery.controler.js"></script>
+    <script src="js/meme.controler.js"></script>
+    <script src="js/gallery.controler.js"></script>
 </body>
 </html>

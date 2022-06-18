@@ -1,7 +1,6 @@
 'use strict'
 
 function saveToStorage(key, val) {
-    console.log('saving')
     localStorage.setItem(key, JSON.stringify(val))
 }
 

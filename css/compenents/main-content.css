@@ -11,6 +11,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     flex-direction: row;
     margin: 0 auto;
 
@@ -22,8 +23,8 @@
     background-repeat: no-repeat;
     min-width: 270px;
     /* background-image: url(../img/1.jpg); */
-    /* object-fit: contain; */
-    background-size: contain;
+    object-fit: fill;
+    background-size: cover;
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.36);
     padding: 5px;
     margin: 10px;
@@ -99,4 +100,13 @@ main{
     padding: 1.5em;
     border: none;
     font-family: MontserratR;
+}
+
+
+.meme-gallery-section{
+    display: block;
+}
+
+.meme-gallery-section h1{
+    font-size: 5em;
 }

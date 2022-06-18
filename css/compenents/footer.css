@@ -1,15 +1,17 @@
 footer {
     background-color: var(--clrOrange);
+    width: 100%;
+    padding: 0;
 }
 
 
 footer img{
     width: 15em;
-    padding-top: 4em;
+    padding-top: 1em;
 }
 
 footer h3{
-    padding-bottom: 5em;
+    padding-bottom: 1em;
     color: var(--clrWhite);
     font-weight: normal;
 }
