@@ -13,7 +13,7 @@ function renderGallery(){
                 src="img/${img.id}.jpg">`)
     
     const elImgContainer = document.querySelector('.img-container')
-    elImgContainer.innerHTML += strHtmls.join('')
+    elImgContainer.innerHTML = strHtmls.join('')
 
     renderSearchWords() 
     display('gallery')
