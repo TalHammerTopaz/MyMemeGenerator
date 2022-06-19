@@ -10,19 +10,14 @@ function init() {
     gCanvas = document.getElementById('my-canvas')
     gCtx = gCanvas.getContext('2d')
 
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = '#2f4f4f'
-    gCtx.fillStyle = '#2f4f4f'
-
-    renderMemeByQueryStringParams()
+    renderMemeByQueryString()
     addListeners()
 
 }
 
 
 
-
-function renderMemeByQueryStringParams() {
+function renderMemeByQueryString() {
     // Retrieve data from the current query-params
     const queryStringParams = new URLSearchParams(window.location.search)
     const memeToRender = queryStringParams.get('meme')
@@ -40,24 +35,27 @@ function renderMemeByQueryStringParams() {
 
 //render meme
 function renderMeme(saving=false){
-    
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
-  
+     
     const meme = getMeme() 
   
-    var ratio = getRatio(meme.selectedImgId)
-    gCanvas.height = gCanvas.width*ratio 
+    const ratio = getRatio(meme.selectedImgId)
+    // gCanvas.height = gCanvas.width*ratio 
 
-      //render img
-    var imgSrc = `img/${meme.selectedImgId}.jpg`
-    var img = new Image()
+    //render img
+    var idx = saving? false: meme.selectedLineIdx
+    const imgSrc = `img/${meme.selectedImgId}.jpg`
+    const img = new Image()
     img.src= imgSrc
-    img.onload = renderImg.bind(null, img)
+    img.onload = function(){
+
+        gCanvas.height = gCanvas.width*this.height/this.width
+        renderImg(img)
+        renderTxt(meme.lines,idx)
+    }
     
     //render text
     //if saving render without selected line
-    var idx = saving? false: meme.selectedLineIdx
-    setTimeout (renderTxt, 100, meme.lines, idx)
+    // setTimeout (renderTxt, 100, meme.lines, idx)
 }
 
 
@@ -71,14 +69,12 @@ function renderImg(img) {
 
 //render text
 function renderTxt(txtLines, lineIdx){
-  
-    // for each txt line set parameters and render on canvas
-    for (let i=0; i<txtLines.length; i++){
-        var line = txtLines[i]
+
+    txtLines.forEach((line, i) =>{
 
         //select maximum size to fit line
         var currFontSize = (line.fontSize<= maxSize(line.txt))? line.fontSize : maxSize(line.txt)
-
+    
         var font= currFontSize +'px '+ line.fontFamily
         gCtx.font = font
     
@@ -86,20 +82,20 @@ function renderTxt(txtLines, lineIdx){
         gCtx.fillStyle = line.fill
         gCtx.fillText(line.txt, line.posLine.x, line.posLine.y)
         gCtx.strokeText(line.txt, line.posLine.x, line.posLine.y)
-
+    
         var txtLength = mesureTxt(line.txt)
-
+    
         //mark selected line with rect
         if (i === lineIdx){
             gCtx.lineWidth = 1
             gCtx.strokeStyle = "#000000"
-            // gCtx.strokeRect(line.posLine.x-2, line.posLine.y-32, line.posLine.x+410, 40) 
             gCtx.strokeRect(line.posLine.x-2, line.posLine.y-32, txtLength+8, 40) 
         }
 
-    }         
+    })
+   
 
-}
+ }         
 
 
 //change text on input line 
@@ -130,7 +126,7 @@ function onAddLine(){
 //select line with btn
 function onSwitchLine(){
     const txt = switchLine()
-    var elInput = document.querySelector('.text-input')
+    const elInput = document.querySelector('.text-input')
     elInput.value= txt
     renderMeme()
 } 
@@ -170,7 +166,7 @@ function onSaveMeme(){
 //delete line
 function onDelete(){ 
     deleteline()
-    var elInput = document.querySelector('.text-input')
+    const elInput = document.querySelector('.text-input')
     elInput.value= ''
     renderMeme()
 }
@@ -192,9 +188,17 @@ function onAddSticker(value){
 
 //measure txt length
 function mesureTxt(txt){
-    var textLength =  gCtx.measureText(txt).width 
+    const textLength =  gCtx.measureText(txt).width 
     return textLength
 }
+
+
+//calculate max size for txt
+function maxSize(txt){
+    const maxSize =  (gCanvas.width / txt.length) *2
+    return maxSize
+}
+
 
 
 // add event listeners
@@ -208,6 +212,7 @@ function addListeners() {
 function addMouseListeners() {
     gCanvas.addEventListener('mousemove', onMove)
     gCanvas.addEventListener('mousedown', onDown)
+    gCanvas.addEventListener('mouseup', onUp)
     window.addEventListener('resize', () => {
         resizeCanvas()
     })
@@ -217,6 +222,7 @@ function addMouseListeners() {
 function addTouchListeners() {
     gCanvas.addEventListener('touchmove', onMove)
     gCanvas.addEventListener('touchstart', onDown)
+    gCanvas.addEventListener('mouseup', onUp)
     window.addEventListener('resize', () => {
         resizeCanvas()
     })
@@ -227,10 +233,20 @@ function addTouchListeners() {
 //select or unselect line when clicking on canvas
 function onDown(ev) {
     const pos = getEvPos(ev)
+    toggleMoving()
     lineClicked(pos)
     renderMeme()
-    if (isMoving())document.body.style.cursor = 'grabbing'
-    else document.body.style.cursor = 'auto'
+    document.body.style.cursor = 'grabbing'
+    
+}
+
+function onUp(ev) {
+    // const pos = getEvPos(ev)
+    toggleMoving()
+    // lineClicked(pos)
+    // renderMeme()
+    document.body.style.cursor = 'auto'
+   
 }
 
 //move line on drag

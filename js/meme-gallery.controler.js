@@ -3,21 +3,25 @@
 
 // render meme gallery page
 function renderMemeGallary() {
-
-    var strHTML =''
+    const txt = 'Nothing here yet... Create a meme'
     const memes = getMemeGallery()
+    if(!memes){
+        return
+    }
+
     var strHTMLs = memes.map (meme => `<div onclick="onEditMeme(${memes.indexOf(meme)})" 
                                         class="meme-img img${memes.indexOf(meme)}"></div>`)
+
     document.querySelector('.meme-gallery-container').innerHTML = strHTMLs.join('')
     
-    for (let i=0; i<memes.length; i++){
+    memes.forEach((meme, idx) => {
+        var elImg = document.querySelector(`.img${idx}`)
+        elImg.style.backgroundImage = 'url(' + meme.url +')'
 
-        var elImg = document.querySelector(`.img${i}`)
-        elImg.style.backgroundImage = 'url(' + memes[i].url +')'
-
-        var ratio = getRatio(memes[i].selectedImgId)
+        var ratio = getRatio(meme.selectedImgId)
         elImg.style.height = 270*ratio +"px"
-    }       
+    })
+
 
 }
 

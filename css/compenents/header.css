@@ -26,8 +26,13 @@ nav :not(:last-child){
 }
 
 nav :last-child{
-    margin-inline-end: 2em;
-    margin-inline-start: 2em;
+    margin-inline-end: 8px;
+    margin-inline-start: 8px;
+}
+
+.screen-toggle{
+    font-size: 25px;
+    margin: 0;
 }
 
 /* GALLAERY HEADER */
@@ -66,8 +71,13 @@ nav :last-child{
 .search-words{
     /* min-width: 70%;  */
     margin-inline-start: 2em;
+    margin-inline-start: 2em;
     margin-bottom: 0;
     font-size: 5em;
 }
 
 
+.search-words span {
+    cursor: pointer;
+
+}

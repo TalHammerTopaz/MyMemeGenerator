@@ -19,6 +19,10 @@ body{
     min-height: 100%;
     background-color: var(--clrWhite);
     text-align: center;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */
 }
 
 

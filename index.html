@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css" />
-    <title>MyMemeGenerator</title>
+    <title>My Meme Generator</title>
 </head>
 
 <body onload="init()">
@@ -30,7 +30,7 @@
 
         <section class="gallary">   
 
-            <div class="gallary-header flex space-between">
+            <div class="gallary-header flex center">
                 <div class="search">
                <input list="keywords" oninput="onSearch(value)" name="keywords" id="keyword" placeholder="Search something ...">
                     <datalist id="keywords">
@@ -49,8 +49,8 @@
                 </div>
                 <h2 class="search-words">some search words...</h2>
             </div>
+            
             <button onclick="onGenerateRandomMeme()" >I'm flexibale</button> 
-
             <div class="main-layout img-container"></div>
 
         </section>
@@ -70,7 +70,7 @@
                 <div class="control">
                     <input type="text" class= "text-input" 
                     oninput="setLineTxt(this.value)"
-                    placeholder="Start typing..." />
+                    placeholder="Start typing..."  maxlength="30"/>
                 </div>
                 
                 <div class="control">
@@ -128,13 +128,14 @@
             
         </section>
         
-        <section class="meme-gallery-section">
+        <section class="meme-gallery">
 
             <h1>My Memes</h1>
 
             <div class="flex center">
                 <div class="meme-gallery-layout">
-                    <div class="meme-gallery-container "></div>
+                    <div class="meme-gallery-container ">
+                    </div>
                 </div>
             </div>   
 

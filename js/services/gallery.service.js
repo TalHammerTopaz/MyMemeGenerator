@@ -39,7 +39,7 @@ function setFilter(value){
 //get images to render according to filter
 function getImagesToRender(){
     if(!gFilter) return gImgs
-    var imgs = gImgs.filter ( img => img.keywords.includes(gFilter))
+    var imgs = gImgs.filter ( img => img.keywords.some(word => word.startsWith(gFilter)))
     return imgs
 }
 

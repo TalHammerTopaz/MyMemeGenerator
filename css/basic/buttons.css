@@ -10,4 +10,5 @@ button {
     padding: 0 1em;
     margin: 1em;
     line-height:2.5em; 
+    cursor: pointer;
 } 

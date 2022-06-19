@@ -13,7 +13,7 @@ function renderGallery(){
                 src="img/${img.id}.jpg">`)
     
     const elImgContainer = document.querySelector('.img-container')
-    elImgContainer.innerHTML = strHtmls.join('')
+    elImgContainer.innerHTML += strHtmls.join('')
 
     renderSearchWords() 
     display('gallery')
@@ -26,7 +26,7 @@ function renderGallery(){
 function display(value){
     document.querySelector('.gallary').style.display = (value === 'gallery') ? 'block' : 'none'
     document.querySelector('.meme-contanier').style.display = (value === 'meme')?  'flex' : 'none'
-    document.querySelector('.meme-gallery-section').style.display = (value === 'meme-gallery')? 'block' : 'none'
+    document.querySelector('.meme-gallery').style.display = (value === 'meme-gallery')? 'block' : 'none'
 }
 
 //show meme editor with selected image
@@ -67,7 +67,9 @@ function renderSearchWords(){
     for (const word in searchWords) {
         var selector = '.'+word+''
         var elWord = document.querySelector(selector)
-        elWord.style.fontSize = searchWords[word]>8 ? searchWords[word]*3/16 +"rem" :0
+        elWord.style.fontSize = searchWords[word] < 8 ? 0:
+                                        searchWords[word] < 35? searchWords[word]*3/16 +"rem" : 6.5 +"rem"
+       
       }   
 }
 
